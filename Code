@@ -1,0 +1,27 @@
+brick = ConnectBrick('EV1');
+int rightdistance;
+while 1
+    brick.MoveMotor('AB', 50);
+    brick.SetColorMode(2, 2);   % Set Color Sensor connected to Port 1 to Color Code Mode
+    color = brick.ColorCode(2);  % Get Color on port 1.
+    %display(color);                % Print color code of object.
+    distance = brick.UltrasonicDist(1);% Get distance to the nearest object.
+    display(distance);                   % Print distance.
+    
+    if (color == 5 )
+     brick.StopMotor('AB', 'Brake');
+     pause(4);
+     brick.MoveMotor('AB', 50)
+     pause(1);
+    end
+    
+    if (distance == 33.02)
+     brick.StopMotor('AB', 'Brake');
+     pause(1);
+     brick.MoveMotorAngleRel('A', 40, 30, 'Coast');
+     distance = brick.UltrasonicDist(1);
+     rightdistance = distance;
+     brick.MoveMotorAngleRel('B', 40, 240, 'Coast');
+    end 
+        
+end
