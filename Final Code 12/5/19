@@ -1,0 +1,46 @@
+while 1 
+    brick.MoveMotor('A', -29.4);%move forward
+    brick.MoveMotor('B', -27.5); %move forward
+    touch1 = brick.TouchPressed(3);
+    touch2 = brick.TouchPressed(4);
+    distance = brick.UltrasonicDist(1);
+    display(distance);
+    brick.SetColorMode(2, 2);   
+    color = brick.ColorCode(2);
+    
+    %if sees red
+    if (color == 5 ) %red
+     brick.StopMotor('AB', 'Brake');
+     pause(4);
+     brick.MoveMotor('AB', -20)
+     pause(1);
+    end
+    
+    if (color == 4) %yellow
+        brick.StopMotor('AB', 'Brake');
+    end
+    
+    
+     
+    if (touch1 == 1 || touch2 ==1) %if touch sensor touches wall, turns left
+        brick.MoveMotor('AB', 20);
+        pause(1);
+        brick.MoveMotorAngleRel('A', -20, 130, 'Coast');
+        brick.WaitForMotor('A');
+        brick.StopMotor('A');
+    end
+    
+    if (distance > 59) %if ultransonic senses long hallway, turns right
+        brick.MoveMotor('AB', -45);
+        pause(1.5);
+        brick.StopMotor('AB');
+        pause(1);
+        brick.MoveMotorAngleRel('B', -20, 375, 'Coast');
+        pause(1);
+        brick.WaitForMotor('B');
+        brick.StopMotor('B');
+        brick.MoveMotor('AB', -15);
+    end
+    
+    
+end
