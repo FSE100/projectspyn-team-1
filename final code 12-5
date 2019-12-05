@@ -1,14 +1,14 @@
 while 1 
     brick.MoveMotor('A', -29.4);%move forward
     brick.MoveMotor('B', -27.5); %move forward
-    touch1 = brick.TouchPressed(3);
-    touch2 = brick.TouchPressed(4);
-    distance = brick.UltrasonicDist(1);
+    touch1 = brick.TouchPressed(3); %1st touch sensor in port 3
+    touch2 = brick.TouchPressed(4); %2nd touch sensor in port 4
+    distance = brick.UltrasonicDist(1); %ultrasonic sensor in port 1
     display(distance);
     brick.SetColorMode(2, 2);   
-    color = brick.ColorCode(2);
+    color = brick.ColorCode(2);% color sensor in port 2
     
-    %if sees red
+    %if sees red , will stop for few seconds and then move
     if (color == 5 ) %red
      brick.StopMotor('AB', 'Brake');
      pause(4);
@@ -16,13 +16,10 @@ while 1
      pause(1);
     end
     
-    
-    
-    %if (color == 2) %blue
-     %   brick.StopMotor('AB', 'Brake');
-      %  pause(1);
-        
-    %end
+    %if green, stop completey
+    if (color == 3) %green
+        brick.StopAllMotors;
+    end
     
      
     if (touch1 == 1 || touch2 ==1) %if touch sensor touches wall, turns left
@@ -32,6 +29,7 @@ while 1
         brick.WaitForMotor('A');
         brick.StopMotor('A');
     end
+    
     
     if (distance > 59) %if ultransonic senses long hallway, turns right
         brick.MoveMotor('AB', -45);
@@ -44,6 +42,5 @@ while 1
         brick.StopMotor('B');
         brick.MoveMotor('AB', -15);
     end
-    
     
 end
