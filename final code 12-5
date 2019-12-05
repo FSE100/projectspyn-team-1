@@ -32,7 +32,7 @@ while 1
     
     
     if (distance > 59) %if ultransonic senses long hallway, turns right
-        brick.MoveMotor('AB', -45);
+        brick.MoveMotor('AB', -38);
         pause(1.5);
         brick.StopMotor('AB');
         pause(1);
