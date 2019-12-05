@@ -1,0 +1,28 @@
+ global key
+ InitKeyboard();
+    
+       
+        while 1
+            pause(0.1);
+                switch key
+                    case 'downarrow'
+                        brick.MoveMotor('AB', -20);
+                    case 'uparrow'
+                        brick.MoveMotor('AB', 20);
+                    case 'rightarrow'
+                        brick.MoveMotorAngleRel('B', -20, 600, 'Coast');
+                    case 'leftarrow'
+                        brick.MoveMotorAngleRel('A', -20, 600, 'Coast');
+                    case 'space'
+                        brick.StopMotor('AB', 'Brake');
+                    case 'c'
+                        brick.MoveMotor('C', 2); %crane
+                    case 's'
+                        brick.MoveMotor('C', -2); %crane move down
+                    case 'x'
+                        brick.StopMotor('C', 'Brake');
+                    case 'q'
+                        break;
+                end
+        end
+    
